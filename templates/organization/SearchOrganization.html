@@ -1,0 +1,47 @@
+{% extends 'index.html' %}
+{% block content %}
+<script>
+    $(function() {
+      $("#organization").autocomplete({
+        source: "{% url 'orgautocomplete' %}",
+        select: function (event, ui) { //item selected
+          AutoCompleteSelectHandler(event, ui)
+        },
+        minLength: 2,
+      });
+    });
+    function AutoCompleteSelectHandler(event, ui)
+    {
+      var selectedObj = ui.item;
+    }  
+</script>
+
+<div style="margin: 0 auto;width:50%;text-align:center;">
+    <form action="" method="POST">
+        {% csrf_token %}
+        <h1>SEARCH ORGANIZATION</h1>
+        <input type="text" name="organization" id="organization" placeholder="Enter organization name">
+        <input type="submit" value="Next">
+    </form>
+</div>
+<div>
+    {% for d in data %}
+    <div style="display: inline-flex;width:35%">
+        <div style="width: 85%;">
+            Name:{{ d.name }}<br>
+            Address: {{d.address}} , {{d.city}},  {{d.state}}, {{d.country}}<br>
+            Contact: {{d.phno1}}<br>
+            Email: {{d.emailAddress}}
+        </div>
+        <div style="width: 15%;">
+            <form action="{% url 'getuserdetails' d.id %}" method="GET">
+                <button type="submit">Book Appointment</button>
+            </form>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+
+
+{% endblock%}
