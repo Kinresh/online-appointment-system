@@ -14,13 +14,14 @@
     
 </head>
 <body>
-
-    <h1>Welcome To Home Page</h1>
+    
+    <h1>Welcome {{ request.user.username }}</h1>
     <h1>Header</h1>
     
     <a href="{% url 'createorganization' %}">Add New Organization</a>
     <a href="{% url 'vieworganizations' %}">View Organizations</a>
     <a href="{% url 'searchorganization' %}">Search Organizations</a>
+    <a href="{% url 'logoutpage' %}">logout</a>
 
         
 

@@ -1,0 +1,75 @@
+{% extends 'index.html' %}
+{% block content %}
+<div>
+    
+    <div style="display: inline-flex;width: 100%">
+        <div style="width: 40%;">
+            <div>
+                Name:{{ organization.name }}<br>
+                Address: {{organization.address}} , {{organization.city}}, {{organization.state}},
+                {{organization.country}}<br>
+                Contact: {{organization.phno1}}<br>
+                Email: {{organization.emailAddress}}
+            </div>
+            <div>
+                <table>
+                    <tr>
+                        <th>Availability</th>
+                        <th>From</th>
+                        <th>To</th>
+                    </tr>
+                    <tr>
+                        <td>Monday</td>
+                        <td>{{organization.availability.monday_from}}</td>
+                        <td>{{organization.availability.monday_to}}</td>
+                    </tr>
+                    <tr>
+                        <td>Tuesday</td>
+                        <td>{{organization.availability.tueday_from}}</td>
+                        <td>{{organization.availability.tueday_to}}</td>
+                    </tr>
+                    <tr>
+                        <td>Wednesday</td>
+                        <td>{{organization.availability.wednesday_from}}</td>
+                        <td>{{organization.availability.wednesday_to}}</td>
+                    </tr>
+                    <tr>
+                        <td>Thursday</td>
+                        <td>{{organization.availability.thursday_from}}</td>
+                        <td>{{organization.availability.thursday_to}}</td>
+                    </tr>
+                    <tr>
+                        <td>Friday</td>
+                        <td>{{organization.availability.friday_from}}</td>
+                        <td>{{organization.availability.friday_to}}</td>
+                    </tr>
+                    <tr>
+                        <td>Saturday</td>
+                        <td>{{organization.availability.saturday_from}}</td>
+                        <td>{{organization.availability.saturday_to}}</td>
+                    </tr>
+                    <tr>
+                        <td>Sunday</td>
+                        <td>{{organization.availability.sunday_from}}</td>
+                        <td>{{organization.availability.sunday_to}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div style="width: 25%;">
+            <form action="" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="organizationid" value="{{ organization.id }}">
+                <table>
+                    {{form_appointment.as_table}}
+                </table>
+                <table>
+                    {{form_user.as_table}}
+                </table>
+                <input type="submit" value="Confirm">
+                <input type="reset" value="Cancel">
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock%}
