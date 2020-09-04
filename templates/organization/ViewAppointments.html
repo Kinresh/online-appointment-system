@@ -1,0 +1,37 @@
+{% extends 'index.html' %}
+{% block content %}
+<div>
+    <b>Active Appointments For {{ appointments.0.organization.name }}</b>
+    <table style="min-width: 70%;text-align: left;">
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Reason</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+        {% for d in appointments %}
+        <tr>
+            <td>{{ d.user.name}}</td>
+            <td>{{ d.user.emailAddress}}</td>
+            <td>{{ d.user.phno}}</td>
+            <td>{{ d.reasonOfAppointment }}</td>
+            <td>{{ d.dateOfAppointment }}</td>
+            <td>{{ d.timeOfAppointment }}</td>
+            <td>{{ d.status }}</td>
+            <td>
+                {% if d.status.id == 1%}
+                <a href="{% url 'confirmappointment' d.id %}"><button>Confirm Appointment</button></a>
+                {% elif d.status.id == 2%}
+                <a href="{% url 'completeappointment' d.id %}"><button>Completed</button></a>
+                {% endif %}
+                <a href="{% url 'deleteappointment' d.id %}"><button>Delete</button></a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock%}

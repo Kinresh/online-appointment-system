@@ -1,6 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>Document</title>
     <meta charset="UTF-8">
@@ -11,25 +12,26 @@
     <!-- jQuery UI !-->
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-    
+
 </head>
+
 <body>
-    
+
     <h1>Welcome {{ request.user.username }}</h1>
     <h1>Header</h1>
-    
-    <a href="{% url 'createorganization' %}">Add New Organization</a>
-    <a href="{% url 'vieworganizations' %}">View Organizations</a>
-    <a href="{% url 'searchorganization' %}">Search Organizations</a>
-    <a href="{% url 'logoutpage' %}">logout</a>
 
-        
+    <div style="margin-bottom: 25px;">
+        <a href="{% url 'vieworganizations' %}">My Organizations</a>
+        <a href="{% url 'searchorganization' %}">Search Organizations</a>
+        <a href="{% url 'logoutpage' %}">logout</a>
+    </div>
 
-    
+
     {% block content %}
     {% endblock %}
     <h1>Footer</h1>
 
 
 </body>
+
 </html>

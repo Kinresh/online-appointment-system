@@ -5,7 +5,7 @@ import apps.Organizations.models
 from apps.Organizations.models import Organization, Availability
 from apps.Appointments.forms import AppointmentForm
 from .forms import UserForm
-from apps.Appointments.emails import sendEmail
+from apps.Appointments.emails import SendAsyncEmail
 import threading
 
 
@@ -27,9 +27,9 @@ def getUserDetails(request, id):
                 f.user_id = user.id
                 f.organization_id = organizationid
                 appointment = f.save()
-
-                t = threading.Thread(target=sendEmail, args=[request, user, organization, appointment])
-                t.start()
+                SendAsyncEmail(request, 1, user.id, organizationid, appointment.id)
+                #t = threading.Thread(target=sendEmail, args=[request, user, organization, appointment])
+                #t.start()
 
                 return render(request, 'appointment/waitingforconfirmation.html')
 

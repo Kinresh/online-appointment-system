@@ -3,6 +3,8 @@ from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 import json
 from .forms import OrganizationForm, AvailabilityForm
 from .models import Organization, Availability
+from apps.Appointments.models import Appointment
+from apps.Users.models import User
 
 def createOrganization(request):
     if request.method == "GET":
@@ -16,6 +18,7 @@ def createOrganization(request):
                 faobj=form_availability.save()
                 f = form.save(commit=False)
                 f.availability_id = faobj.id
+                f.createdBy = request.user.id
                 f.save()
                 return HttpResponseRedirect(reverse('vieworganizations'))
             except:
@@ -24,7 +27,7 @@ def createOrganization(request):
     return render(request,'organization/CreateOrganization.html',context)
 
 def viewOrganizations(request):
-    data = Organization.objects.filter(isActive=True)
+    data = Organization.objects.filter(isActive=True,createdBy=request.user.id)
     context={"data":data}
     return render(request,'organization/ViewOrganizations.html',context)
 
@@ -43,6 +46,7 @@ def updateOrganization(request, id):
                 faobj=form_availability.save()
                 f=form.save(commit=False)
                 f.availability_id = faobj.id
+                f.lastUpdatedBy = request.user.id
                 f.save()
                 return HttpResponseRedirect(reverse('vieworganizations'))
             except:
@@ -80,3 +84,8 @@ def orgAutoComplete(request):
         data = 'fail'
     mimetype = 'application/json'
     return HttpResponse(data, mimetype)
+
+def viewOrgAppointments(request, id):
+    appointments = Appointment.objects.filter(isActive=True, organization_id=id)
+    context={"appointments":appointments}
+    return render(request,'organization/ViewAppointments.html',context)
