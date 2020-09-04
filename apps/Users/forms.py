@@ -11,7 +11,7 @@ class UserForm(forms.ModelForm):
             'phno': forms.TextInput(),
         }
         labels={
-            'emailAddress': 'Your Email Address',
+            'emailAddress': 'Email Address',
             'name': 'Name',
             'phno': 'Phone Number',
         }

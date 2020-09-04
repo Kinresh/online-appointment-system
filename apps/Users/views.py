@@ -1,7 +1,6 @@
 from django.shortcuts import render, reverse
 from django.http import HttpResponseRedirect
 from django.apps import apps
-import apps.Organizations.models
 from apps.Organizations.models import Organization, Availability
 from apps.Appointments.forms import AppointmentForm
 from .forms import UserForm
@@ -26,8 +25,8 @@ def getUserDetails(request, id):
                 f = form_appointment.save(commit=False)
                 f.user_id = user.id
                 f.organization_id = organizationid
-                appointment = f.save()
-                SendAsyncEmail(request, 1, user.id, organizationid, appointment.id)
+                f.save()
+                SendAsyncEmail(request, 1, user.id, organizationid, f.id)
                 #t = threading.Thread(target=sendEmail, args=[request, user, organization, appointment])
                 #t.start()
 
@@ -42,5 +41,5 @@ def getUserDetails(request, id):
         "organizationID":id, 
         "organization":organization
         }
-    return render(request, 'GetDetails.html',context)
+    return render(request, 'appointment/GetDetails.html',context)
 
